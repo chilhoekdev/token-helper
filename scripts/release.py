@@ -14,13 +14,14 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-
 ROOT = Path(__file__).resolve().parent.parent
 VERSION_SCRIPT = ROOT / "scripts" / "version.py"
 
 
 def run(command: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=check)
+    return subprocess.run(
+        command, cwd=ROOT, text=True, capture_output=True, check=check
+    )
 
 
 def prompt(message: str, default: Optional[str] = None) -> str:
@@ -102,16 +103,22 @@ def main() -> None:
         return
 
     if not has_changes():
-        print("No local changes found. You can still run the version bump if you want to release the current state.")
+        print(
+            "No local changes found. You can still run the version bump if you want to release the current state."
+        )
         if not confirm("Continue anyway?", default=False):
             print("Cancelled.")
             return
     else:
-        commit_message = prompt("Enter commit message for your current changes", "Update project files")
+        commit_message = prompt(
+            "Enter commit message for your current changes", "Update project files"
+        )
         commit_changes(commit_message)
 
     bump_type = choose_bump()
-    release_message = prompt("Enter release message for the tag", f"Release {bump_type} update")
+    release_message = prompt(
+        "Enter release message for the tag", f"Release {bump_type} update"
+    )
 
     bump_version(bump_type, release_message)
 

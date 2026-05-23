@@ -17,19 +17,20 @@ def DwmSetWindowAttribute(hwnd, attr, value, size=4):
         ctypes.wintypes.HWND,
         ctypes.wintypes.DWORD,
         ctypes.c_void_p,
-        ctypes.wintypes.DWORD
+        ctypes.wintypes.DWORD,
     ]
     return DwmSetWindowAttribute(hwnd, attr, ctypes.byref(ctypes.c_int(value)), size)
 
 
 def ExtendFrameIntoClientArea(hwnd):
     """Extend the frame into the client area for borderless window effects."""
+
     class _MARGINS(ctypes.Structure):
         _fields_ = [
             ("cxLeftWidth", ctypes.c_int),
             ("cxRightWidth", ctypes.c_int),
             ("cyTopHeight", ctypes.c_int),
-            ("cyBottomHeight", ctypes.c_int)
+            ("cyBottomHeight", ctypes.c_int),
         ]
 
     DwmExtendFrameIntoClientArea = ctypes.windll.dwmapi.DwmExtendFrameIntoClientArea

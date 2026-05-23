@@ -16,6 +16,7 @@ import re
 from pathlib import Path
 from typing import Tuple, Optional
 
+
 class VersionManager:
     def __init__(self):
         self.version_file = Path(__file__).parent / "VERSION"
@@ -25,20 +26,20 @@ class VersionManager:
         """Read current version from VERSION file or git tags"""
         if self.version_file.exists():
             return self.version_file.read_text().strip()
-        
+
         # Try to get from git tags
         try:
             result = subprocess.run(
                 ["git", "describe", "--tags", "--abbrev=0"],
                 capture_output=True,
                 text=True,
-                check=False
+                check=False,
             )
             if result.returncode == 0:
                 return result.stdout.strip()
         except Exception:
             pass
-        
+
         return "0.1.0"
 
     def _write_version(self, version: str) -> None:
@@ -49,8 +50,8 @@ class VersionManager:
     def _parse_version(self, version: str) -> Tuple[int, int, int]:
         """Parse semantic version string"""
         # Remove 'v' prefix if present
-        version = version.lstrip('v')
-        match = re.match(r'(\d+)\.(\d+)\.(\d+)', version)
+        version = version.lstrip("v")
+        match = re.match(r"(\d+)\.(\d+)\.(\d+)", version)
         if not match:
             raise ValueError(f"Invalid version format: {version}")
         return tuple(map(int, match.groups()))
@@ -62,7 +63,9 @@ class VersionManager:
     def bump_version(self, bump_type: str) -> str:
         """Bump version based on type: patch, minor, or major"""
         if bump_type not in ["patch", "minor", "major"]:
-            raise ValueError(f"Invalid bump type: {bump_type}. Must be: patch, minor, major")
+            raise ValueError(
+                f"Invalid bump type: {bump_type}. Must be: patch, minor, major"
+            )
 
         major, minor, patch = self._parse_version(self.current_version)
 
@@ -89,15 +92,13 @@ class VersionManager:
             subprocess.run(
                 ["git", "tag", "-a", version, "-m", message],
                 check=True,
-                capture_output=True
+                capture_output=True,
             )
             print(f"✓ Created git tag: {version}")
 
             # Push tag
             subprocess.run(
-                ["git", "push", "origin", version],
-                check=True,
-                capture_output=True
+                ["git", "push", "origin", version], check=True, capture_output=True
             )
             print(f"✓ Pushed tag to origin: {version}")
             return True
@@ -124,18 +125,18 @@ class VersionManager:
             # Commit version bump
             try:
                 subprocess.run(
-                    ["git", "add", "VERSION"],
-                    check=True,
-                    capture_output=True
+                    ["git", "add", "VERSION"], check=True, capture_output=True
                 )
                 subprocess.run(
                     ["git", "commit", "-m", f"Bump version to {new_version}"],
                     check=True,
-                    capture_output=True
+                    capture_output=True,
                 )
                 print(f"✓ Committed version bump")
             except subprocess.CalledProcessError:
-                print("⚠ Warning: Could not commit version file (it may not be tracked)")
+                print(
+                    "⚠ Warning: Could not commit version file (it may not be tracked)"
+                )
 
             # Create and push tag
             if not self.create_git_tag(new_version, message):

