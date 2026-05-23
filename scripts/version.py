@@ -10,11 +10,11 @@ Usage:
     python version.py          # Show current version
 """
 
+import re
 import subprocess
 import sys
-import re
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 
 class VersionManager:

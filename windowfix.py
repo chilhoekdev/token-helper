@@ -5,9 +5,10 @@ Source: https://github.com/r0x0r/pywebview/issues/1310#issue-2089437915
 
 import ctypes
 import ctypes.wintypes
-import win32process
-import win32gui
 import os
+
+import win32gui
+import win32process
 
 
 def DwmSetWindowAttribute(hwnd, attr, value, size=4):

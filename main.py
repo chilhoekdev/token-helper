@@ -1,21 +1,23 @@
-from windowfix import setup_all_windows_borderless
-from typing import Dict, Optional, Union, List
-import httpx
-import time
 import base64
-import re
-import os
-import json
 import ctypes
+import json
+import os
+import re
 import sys
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import webview
+from typing import Dict, List, Optional, Union
+
+import httpx
 import pyclip
-from flask import Flask, render_template, request, jsonify
-from win32crypt import CryptUnprotectData
+import webview
 from Crypto.Cipher import AES
 from Crypto.Cipher._mode_gcm import GcmMode
+from flask import Flask, jsonify, render_template, request
+from win32crypt import CryptUnprotectData
+
+from windowfix import setup_all_windows_borderless
 
 
 class Discord:
