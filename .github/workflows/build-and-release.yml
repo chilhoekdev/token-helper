@@ -9,6 +9,10 @@ on:
       - src
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   build:
     runs-on: windows-latest
@@ -43,23 +47,12 @@ jobs:
           path: dist/BoostCypher Token Helper.exe
           retention-days: 30
 
-      - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Create Release (Version Tag)
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: dist/BoostCypher Token Helper.exe
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload to latest release (if not a tag)
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/src'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/BoostCypher Token Helper.exe
-          tag_name: latest
-          draft: false
-          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
