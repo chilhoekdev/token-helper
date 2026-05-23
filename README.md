@@ -1,13 +1,26 @@
 # BoostCypher Token Helper
-<p align="center">
-  <img src="https://i.ibb.co/HdKNN5z/eth.png" alt="BoostCypher" />
-</p>
-If you need to quickly grab the Discord token of one of your accounts on the system, the Token Helper developed by the BoostCypher team is the perfect solution for you.
 
-# Features
-- Beautiful UI
-- Portable
-- Open source
+<div align="center">
+  <img src="https://i.ibb.co/HdKNN5z/eth.png" alt="BoostCypher Token Helper" width="200" />
+  <h3>Fast and Secure Token Extraction</h3>
+  <p>
+    <strong>Token Helper</strong> is a lightweight Windows utility that safely extracts Discord authentication tokens from your system.
+  </p>
+  
+[![GitHub Release](https://img.shields.io/github/v/release/chilhoekdev/token-helper?style=flat-square)](https://github.com/chilhoekdev/token-helper/releases)
+[![GitHub License](https://img.shields.io/github/license/chilhoekdev/token-helper?style=flat-square)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue?style=flat-square)](https://www.python.org/)
+[![Windows](https://img.shields.io/badge/platform-windows-blue?style=flat-square)](https://github.com/chilhoekdev/token-helper)
+
+</div>
+
+---
+
+## ✨ Features
+
+- 🎨 **Beautiful, Modern UI** - Clean and intuitive interface
+- ⚡ **Portable** - Single executable file, no installation needed
+- 🔒 **Safe & Secure** - Open source, transparent, no hidden operations
 - Discord client fetching support
     - Supported discord clients:
         - Discord Stable

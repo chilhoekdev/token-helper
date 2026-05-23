@@ -1,0 +1,32 @@
+name: Versioning Helper
+description: Choose type of version bump
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue type helps track version releases. Select the type of version bump below.
+  
+  - type: dropdown
+    id: version-type
+    attributes:
+      label: Version Bump Type
+      description: What type of version bump is this?
+      options:
+        - Patch (v1.0.0 → v1.0.1) - Bug fixes, minor changes
+        - Minor (v1.0.0 → v1.1.0) - New features, backward compatible
+        - Major (v1.0.0 → v2.0.0) - Breaking changes
+    validations:
+      required: true
+
+  - type: textarea
+    id: changes
+    attributes:
+      label: Changes Included
+      description: List the changes/fixes in this version
+      placeholder: |
+        - Fixed issue with Firefox token extraction
+        - Added support for Chrome profile auto-detection
+        - Improved error messages
+    validations:
+      required: true

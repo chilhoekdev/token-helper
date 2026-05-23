@@ -1,0 +1,73 @@
+name: 🔧 Configuration Issue
+description: Report an issue with setup, installation, or configuration
+title: "[CONFIG] "
+labels: ["help-wanted", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a configuration issue! This helps us improve setup documentation.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What setup or configuration issue are you experiencing?
+      placeholder: "I'm having trouble with..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps Taken
+      description: What steps did you follow to get to this point?
+      placeholder: |
+        1. Cloned the repository
+        2. Ran pip install -r requirements.txt
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error Message
+      description: "Paste the full error message (if any)"
+      render: shell
+      placeholder: "Paste error output here"
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installation Method
+      options:
+        - Running from source code
+        - Pre-compiled executable
+        - Docker
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      placeholder: |
+        - Operating System: Windows 11
+        - Python version: 3.11.0
+        - Installation method: pip
+        - Any custom setup: None
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
