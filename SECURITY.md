@@ -4,20 +4,21 @@
 
 We take security seriously. If you discover a security vulnerability in the Token Helper project, please report it responsibly.
 
-**Please do not open a public GitHub issue for security vulnerabilities.**
+**Please create a GitHub issue to report the vulnerability.**
 
 ### How to Report
 
-Email your security concern to: **[your-security-email@example.com]**
+Open the [Security Report issue template](https://github.com/chilhoekdev/token-helper/issues/new?template=security.yml) and include:
 
-Include:
 - Description of the vulnerability
 - Steps to reproduce (if applicable)
 - Potential impact
 - Suggested fix (if you have one)
 - Your contact information
 
-We will acknowledge receipt of your report within 48 hours and work with you to resolve the issue.
+If the issue may expose sensitive details, keep the title brief and include only the minimum information needed to describe the problem safely.
+
+We will review reports as quickly as possible and work with you to resolve the issue.
 
 ## Security Best Practices
 

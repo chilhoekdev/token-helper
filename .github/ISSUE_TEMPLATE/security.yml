@@ -1,0 +1,76 @@
+name: 🔐 Security Report
+description: Report a security vulnerability privately and responsibly
+title: "[SECURITY] "
+labels: ["security", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping keep the project secure.
+        Please keep the report focused on the vulnerability and avoid sharing unnecessary sensitive details.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: I have searched existing issues to make sure this has not already been reported
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Provide a short summary of the security concern
+      placeholder: "Brief description of the issue"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What is the potential impact of this vulnerability?
+      placeholder: "What could happen if this is exploited?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps
+      description: If applicable, provide steps to reproduce the issue
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Technical Details
+      description: Share any logs, screenshots, or technical details that help explain the issue
+      placeholder: "Paste details here"
+    validations:
+      required: false
+
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Suggested Mitigation
+      description: If you have ideas on how to fix or reduce the issue, share them here
+      placeholder: "Suggested fix or workaround"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Responsible Disclosure
+      options:
+        - label: I understand this report will be handled as a security issue
+          required: true
