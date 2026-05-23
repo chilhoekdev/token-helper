@@ -1,7 +1,6 @@
 # BoostCypher Token Helper
 
 <div align="center">
-  <img src="https://i.ibb.co/HdKNN5z/eth.png" alt="BoostCypher Token Helper" width="200" />
   <h3>Fast and Secure Token Extraction</h3>
   <p>
     <strong>Token Helper</strong> is a lightweight Windows utility that safely extracts Discord authentication tokens from your system.
