@@ -1,0 +1,81 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec.py
+*.toc
+*.pyz
+*.pyzw
+
+# Build outputs
+dist/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Working directories
+working/
+temp/
+tmp/
+
+# OS
+Thumbs.db
+.DS_Store
+*.log
+
+# Specific to this project
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.local
+secrets/
+*.key
+*.pem

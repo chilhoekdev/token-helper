@@ -1,0 +1,64 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - main
+      - src
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build BoostCypher Token Helper
+        run: |
+          pyinstaller --onefile --windowed --icon=boostcypher.ico --add-data "ui;ui" --hidden-import=windowfix --name "BoostCypher Token Helper" main.py
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: BoostCypher-Token-Helper-exe
+          path: dist/BoostCypher Token Helper.exe
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/BoostCypher Token Helper.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to latest release (if not a tag)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/src'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/BoostCypher Token Helper.exe
+          tag_name: latest
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,7 @@
+pypiwin32
+pywebview
+httpx
+Flask
+pyclip
+pycryptodome
+PyInstaller
